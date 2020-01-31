@@ -3,18 +3,17 @@ import {
   NativeSyntheticEvent,
   StyleSheet,
   ViewStyle,
-  requireNativeComponent
-} from 'react-native'
+  requireNativeComponent,
+} from "react-native";
+import React from "react";
 
-import React from 'react'
-
-const { KeyCommandConstants } = NativeModules
-const RCTKeyCommands = requireNativeComponent('RCTKeyCommands')
+const { KeyCommandConstants } = NativeModules;
+const RCTKeyCommands = requireNativeComponent(`RCTKeyCommands`);
 const defaultStyles = StyleSheet.create({
   main: {
-    backgroundColor: 'transparent'
-  }
-})
+    backgroundColor: `transparent`,
+  },
+});
 
 export const constants = {
   keyModifierShift: KeyCommandConstants.keyModifierShift as number,
@@ -27,41 +26,36 @@ export const constants = {
   keyInputLeftArrow: KeyCommandConstants.keyInputLeftArrow as string,
   keyInputRightArrow: KeyCommandConstants.keyInputRightArrow as string,
   keyInputEscape: KeyCommandConstants.keyInputEscape as string,
-}
-
+};
 export interface KeyCommand {
   /// The input key, could be something like '1' stands for '1' key,
   /// constatns like keyInputUpArrow and others can also be used here
-  input: string
+  input: string;
   /// Key modifier to be used along with the key press, like Command + Alt
   /// can be passed like
   ///
   ///     constatns.keyModifierCommand | constants.keyModifierAlternate
   ///
-  keyModifier?: number
+  keyModifier?: number;
   /// Title of discoverability to display, leave it as undefined means we
   /// don't want the key command to be displayed in discoverability overlayer
   /// UI
-  discoverabilityTitle?: string
+  discoverabilityTitle?: string;
 }
-
 export interface Props {
-  style?: ViewStyle
+  style?: ViewStyle;
   /// Key commands
-  keyCommands: Array<KeyCommand>
+  keyCommands: KeyCommand[];
   /// Callback function to be called when key command event emits
-  onKeyCommand?: (event: NativeSyntheticEvent<KeyCommand>) => void
+  onKeyCommand?: (event: NativeSyntheticEvent<KeyCommand>) => void;
   /// ID for UI automatic testing
-  testID?: string
+  testID?: string;
 }
-
-export default class KeyCommands extends React.Component<Props> {
-  render () {
-    const { style, ...props } = this.props
-    return (
-      <RCTKeyCommands
-        {...{...props, style: [defaultStyles.main, style]}}
-      />
-    )
-  }
+export default function KeyCommands({
+  style,
+  ...props
+}: React.PropsWithChildren<Props>) {
+  return (
+    <RCTKeyCommands {...{ ...props, style: [defaultStyles.main, style] }} />
+  );
 }

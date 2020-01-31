@@ -11,7 +11,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "declaration": true,
-    "outDir": "./dist"
-  },
-  "types": ["jest", "node"]
+    "outDir": "./dist",
+    "rootDir": "./src"
+  }
 }
